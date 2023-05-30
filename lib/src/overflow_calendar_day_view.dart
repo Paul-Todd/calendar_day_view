@@ -15,6 +15,7 @@ class OverFlowCalendarDayView<T extends Object> extends StatefulWidget {
   const OverFlowCalendarDayView({
     Key? key,
     required this.events,
+    this.primary,
     this.timeTitleColumnWidth = 50.0,
     this.startOfDay = const TimeOfDay(hour: 8, minute: 0),
     this.endOfDay,
@@ -31,6 +32,9 @@ class OverFlowCalendarDayView<T extends Object> extends StatefulWidget {
     this.moreOnRowButton,
     this.onTimeTap,
   }) : super(key: key);
+
+  /// Whether this is the primary controller or the parent is the controller
+  final bool? primary;
 
   /// The width of the column that contain list of time points
   final double timeTitleColumnWidth;
@@ -164,7 +168,10 @@ class _OverFlowCalendarDayViewState<T extends Object>
 
       return SafeArea(
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          primary: widget.primary ?? false,
+          physics: (widget.primary ?? false)
+              ? null
+              : const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.only(top: 10, bottom: 20),
           child: SizedBox(
             height: _timesInDay.length * rowHeight,
