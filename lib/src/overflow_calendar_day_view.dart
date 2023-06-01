@@ -107,10 +107,10 @@ class _OverFlowCalendarDayViewState<T extends Object>
     _heightPerMin = widget.heightPerMin;
     _timesInDay = getTimeList();
 
-    _overflowEvents = processOverflowEvents(widget.events
-      ..sort(
-        (a, b) => a.compare(b),
-      ));
+    final List<DayEvent<T>> sortedEvents = List.from(widget.events)
+      ..sort((a, b) => a.compare(b));
+
+    _overflowEvents = processOverflowEvents(sortedEvents);
 
     if (widget.showCurrentTimeLine) {
       _timer = Timer.periodic(const Duration(minutes: 1), (_) {
@@ -126,10 +126,12 @@ class _OverFlowCalendarDayViewState<T extends Object>
     super.didUpdateWidget(oldWidget);
 
     _timesInDay = getTimeList();
-    _overflowEvents = processOverflowEvents(widget.events
-      ..sort(
-        (a, b) => a.compare(b),
-      ));
+
+    final List<DayEvent<T>> sortedEvents = List.from(widget.events)
+      ..sort((a, b) => a.compare(b));
+
+    _overflowEvents = processOverflowEvents(sortedEvents);
+
     _heightPerMin = widget.heightPerMin;
   }
 
